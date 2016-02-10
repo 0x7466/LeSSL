@@ -1,4 +1,7 @@
-= LeSSL
+LeSSL
+=====
+
+[![Gem Version](https://badge.fury.io/rb/LeSSL.svg)](https://badge.fury.io/rb/LeSSL)
 
 LeSSL is a simple gem to authorize for domains and obaining certificates from the Let's Encrypt CA. Now it's very easy to get free and trusted SSL certificates!
 
@@ -13,13 +16,13 @@ Installation
 Install from Rubygems:
 
 ```
-$ gem install lessl
+$ gem install LeSSL
 ```
 
 or add it to your Gemfile:
 
 ```ruby
-gem 'lessl'
+gem 'LeSSL'
 ```
 
 And then run `bundle install` and you are ready to go.
