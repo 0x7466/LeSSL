@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.authors               = ["Tobias Feistmantl"]
   s.email                 = ["tobias@feistmantl.io"]
   s.homepage              = "https://github.com/tobiasfeistmantl/LeSSL"
-  s.summary               = "Le SSL makes it easy to obain certificates of Let's Encrypt"
-  s.description           = "Le SSL makes it easy to obain certificates of Let's Encrypt"
+  s.summary               = "Le SSL makes it easy to obtain certificates of Let's Encrypt"
+  s.description           = "Le SSL makes it easy to obtain certificates of Let's Encrypt"
   s.license               = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

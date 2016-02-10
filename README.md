@@ -3,7 +3,7 @@ LeSSL
 
 [![Gem Version](https://badge.fury.io/rb/le_ssl.svg)](https://badge.fury.io/rb/le_ssl)
 
-LeSSL is a simple gem to authorize for domains and obaining certificates from the Let's Encrypt CA. Now it's very easy to get free and trusted SSL certificates!
+LeSSL is a simple gem to authorize for domains and obtaining certificates from the Let's Encrypt CA. Now it's very easy to get free and trusted SSL certificates!
 
 Compatibility
 -------------
@@ -36,7 +36,7 @@ Create an instance of the LeSSL Manager:
 private_key = OpenSSL::PKey::RSA.new(4096)
 manager = LeSsl::Manager.new(email: 'john@example.com', agree_terms: true, private_key: private_key)
 ```
-It's recommended to store the contact email and the private key in environment variables because you are just allowed to obain certificates for domains you are authorized for.
+It's recommended to store the contact email and the private key in environment variables because you are just allowed to obtain certificates for domains you are authorized for.
 
 If you have `CERT_ACCOUNT_EMAIL` and `CERT_ACCOUNT_PRIVATE_KEY` set, you don't have to pass them to the initializer.
 
@@ -58,7 +58,7 @@ manager.authorize_for_domain('www.example.com')
 
 If you domain is properly set up you should now be authorized for the domain. Be also sure that your Rails server is running.
 
-Obaining a SSL certificate:
+Obtaining a SSL certificate:
 
 ```ruby
 manager.request_certificate('www.example.com', 'example.com')
