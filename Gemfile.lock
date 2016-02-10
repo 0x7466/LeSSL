@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    LeSSL (0.0.1)
+    le_ssl (0.0.1.1)
       acme-client (~> 0.3.0)
       rails (~> 4.2.5.1)
 
@@ -155,10 +155,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  LeSSL!
   growl
   guard
   guard-minitest
+  le_ssl!
   rb-fsevent
 
 BUNDLED WITH

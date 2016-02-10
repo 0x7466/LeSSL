@@ -1,4 +1,4 @@
-module LeSSL
+module LeSsl
 	class GenericError < StandardError; end
 	class NoContactEmailError < GenericError; end
 	class TermsNotAcceptedError < GenericError; end

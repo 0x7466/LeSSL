@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class LeSSLTest < ActiveSupport::TestCase
+class LeSslTest < ActiveSupport::TestCase
 	test "truth" do
-		assert_kind_of Module, LeSSL
+		assert_kind_of Module, LeSsl
 	end
 end

@@ -1,4 +1,4 @@
-module LeSSL
+module LeSsl
 	class Manager
 		PRODUCTION_ENDPOINT = 'https://acme-v01.api.letsencrypt.org/'
 		DEVELOPMENT_ENDPOINT = 'https://acme-staging.api.letsencrypt.org/'
@@ -6,8 +6,8 @@ module LeSSL
 		def initialize(options={})
 			email = options[:email] || ENV['CERT_ACCOUNT_EMAIL'].presence
 
-			raise LeSSL::NoContactEmailError if email.nil?
-			raise LeSSL::TermsNotAcceptedError unless options[:agree_terms] == true
+			raise LeSsl::NoContactEmailError if email.nil?
+			raise LeSsl::TermsNotAcceptedError unless options[:agree_terms] == true
 
 			@private_key = options[:private_key].presence
 
@@ -54,14 +54,14 @@ module LeSSL
 
 			return certificate
 		rescue Acme::Client::Error::Unauthorized => e
-			raise LeSSL::UnauthorizedError, e.message
+			raise LeSsl::UnauthorizedError, e.message
 		end
 
 		private
 
 		def private_key
 			@private_key ||= OpenSSL::PKey::RSA.new(ENV['CERT_ACCOUNT_PRIVATE_KEY'])
-			raise(LeSSL::NoPrivateKeyError, "No private key for certificate account found") if @private_key.nil?
+			raise(LeSsl::NoPrivateKeyError, "No private key for certificate account found") if @private_key.nil?
 			@private_key
 		end
 
