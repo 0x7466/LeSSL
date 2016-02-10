@@ -1,7 +1,7 @@
 LeSSL
 =====
 
-[![Gem Version](https://badge.fury.io/rb/LeSSL.svg)](https://badge.fury.io/rb/LeSSL)
+[![Gem Version](https://badge.fury.io/rb/le_ssl.svg)](https://badge.fury.io/rb/le_ssl)
 
 LeSSL is a simple gem to authorize for domains and obaining certificates from the Let's Encrypt CA. Now it's very easy to get free and trusted SSL certificates!
 
@@ -16,13 +16,13 @@ Installation
 Install from Rubygems:
 
 ```
-$ gem install LeSSL
+$ gem install le_ssl
 ```
 
 or add it to your Gemfile:
 
 ```ruby
-gem 'LeSSL'
+gem 'le_ssl'
 ```
 
 And then run `bundle install` and you are ready to go.
@@ -34,7 +34,7 @@ Create an instance of the LeSSL Manager:
 
 ```ruby
 private_key = OpenSSL::PKey::RSA.new(4096)
-manager = LeSSL::Manager.new(email: 'john@example.com', agree_terms: true, private_key: private_key)
+manager = LeSsl::Manager.new(email: 'john@example.com', agree_terms: true, private_key: private_key)
 ```
 It's recommended to store the contact email and the private key in environment variables because you are just allowed to obain certificates for domains you are authorized for.
 
@@ -42,7 +42,7 @@ If you have `CERT_ACCOUNT_EMAIL` and `CERT_ACCOUNT_PRIVATE_KEY` set, you don't h
 
 ```ruby
 # Example
-manager = LeSSL::Manager.new(agree_terms: true)  # Accepting the terms is enough
+manager = LeSsl::Manager.new(agree_terms: true)  # Accepting the terms is enough
 ```
 
 The manager registers automatically a new account on the Let's Encrypt servers.
