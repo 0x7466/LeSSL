@@ -37,10 +37,6 @@ module LeSSL
 			return challenge.verify_status
 		end
 
-		def request_certificates(*domains)
-			csr = Acme::Client::CertificateRequest.new(names: domains)
-		end
-
 		def client
 			@acme_client ||= Acme::Client.new(private_key: private_key, endpoint: (Rails.env.development? ? DEVELOPMENT_ENDPOINT : PRODUCTION_ENDPOINT))
 		end
