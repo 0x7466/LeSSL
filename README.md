@@ -68,6 +68,21 @@ This puts the public and private keys into `config/ssl`. Now you just have to co
 
 **Note that you have to authorize seperately for subdomains (e.g. www.example.com)!**
 
+Skip registering
+----------------
+
+You can also skip the automatic registering which is done in the initializer:
+
+```ruby
+manager = LeSsl::Manager.new(agree_terms: true, email: 'john@example.com', private_key: private_key, skip_register: true)
+```
+
+To register an account call the `#register` method:
+
+```ruby
+manager.register('john@example.com')
+```
+
 Development
 -----------
 

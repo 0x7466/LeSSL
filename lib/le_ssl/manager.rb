@@ -9,9 +9,11 @@ module LeSsl
 			raise LeSsl::NoContactEmailError if email.nil?
 			raise LeSsl::TermsNotAcceptedError unless options[:agree_terms] == true
 
-			@private_key = options[:private_key].presence
+			self.private_key = options[:private_key].presence
 
-			register(email)
+			private_key			# Check private key
+
+			register(email) unless options[:skip_register] == true
 		end
 
 		def authorize_for_domain(domain)
@@ -20,9 +22,6 @@ module LeSsl
 
 			file_name = Rails.root.join('public', challenge.filename)
 			dir = File.dirname(Rails.root.join('public', challenge.filename))
-
-			puts file_name
-			puts dir
 
 			FileUtils.mkdir_p(dir)
 
@@ -35,10 +34,6 @@ module LeSsl
 			File.delete(file_name) if challenge.verify_status == 'invalid'
 			
 			return challenge.verify_status
-		end
-
-		def client
-			@acme_client ||= Acme::Client.new(private_key: private_key, endpoint: (Rails.env.development? ? DEVELOPMENT_ENDPOINT : PRODUCTION_ENDPOINT))
 		end
 
 		def request_certificate(*domains)
@@ -57,20 +52,37 @@ module LeSsl
 			raise LeSsl::UnauthorizedError, e.message
 		end
 
-		private
-
-		def private_key
-			@private_key ||= OpenSSL::PKey::RSA.new(ENV['CERT_ACCOUNT_PRIVATE_KEY'])
-			raise(LeSsl::NoPrivateKeyError, "No private key for certificate account found") if @private_key.nil?
-			@private_key
-		end
-
 		def register(email)
 			client.register(contact: "mailto:#{email}").agree_terms
 			return true
 		rescue Acme::Client::Error::Malformed => e
 			return false if e.message == "Registration key is already in use"
 			raise e
+		end
+
+		private
+
+		def private_key=(key)
+			if key.is_a?(OpenSSL::PKey::RSA)
+				@private_key = key
+			elsif key.is_a?(String)
+				@private_key = OpenSSL::PKey::RSA.new(key)
+			elsif key.nil?
+				nil		# Return silently
+			else
+				raise LeSsl::PrivateKeyInvalidFormat
+			end
+		end
+
+		def private_key
+			self.private_key = ENV['CERT_ACCOUNT_PRIVATE_KEY'].presence if @private_key.nil?
+			raise(LeSsl::NoPrivateKeyError, "No private key for certificate account found") if @private_key.nil?
+			
+			@private_key
+		end
+
+		def client
+			@acme_client ||= Acme::Client.new(private_key: private_key, endpoint: (Rails.env.development? ? DEVELOPMENT_ENDPOINT : PRODUCTION_ENDPOINT))
 		end
 	end
 end

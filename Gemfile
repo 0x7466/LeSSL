@@ -18,4 +18,5 @@ group :development, :test do
 	gem 'growl'
 	gem 'guard'
 	gem 'guard-minitest'
+	gem 'ffaker'
 end
