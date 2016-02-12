@@ -7,7 +7,7 @@ require "le_ssl/version"
 Gem::Specification.new do |s|
   s.name                  = "le_ssl"
   s.version               = LeSsl::VERSION
-  s.required_ruby_version = '>= 1.9.3'
+  s.required_ruby_version = '>= 2.1.0'
   s.authors               = ["Tobias Feistmantl"]
   s.email                 = ["tobias@feistmantl.io"]
   s.homepage              = "https://github.com/tobiasfeistmantl/LeSSL"
