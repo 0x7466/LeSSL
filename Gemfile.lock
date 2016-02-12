@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    le_ssl (0.0.1.1)
+    le_ssl (0.0.2)
       acme-client (~> 0.3.0)
-      rails (~> 4.2.5.1)
+      rails (>= 4.0.0)
 
 GEM
   remote: https://rubygems.org/

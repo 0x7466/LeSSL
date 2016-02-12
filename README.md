@@ -2,6 +2,7 @@ LeSSL
 =====
 
 [![Gem Version](https://badge.fury.io/rb/le_ssl.svg)](https://badge.fury.io/rb/le_ssl)
+[![Build Status](https://travis-ci.org/tobiasfeistmantl/LeSSL.svg?branch=master)](https://travis-ci.org/tobiasfeistmantl/LeSSL)
 
 LeSSL is a simple gem to authorize for domains and obtaining certificates from the Let's Encrypt CA. Now it's very easy to get free and trusted SSL certificates!
 
