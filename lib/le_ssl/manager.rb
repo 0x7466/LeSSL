@@ -16,23 +16,53 @@ module LeSsl
 			register(email) unless options[:skip_register] == true
 		end
 
-		def authorize_for_domain(domain)
+		# Authorize the client
+		# for a domain name.
+		#
+		# Challenge options:
+		#  - HTTP (default and recommended)
+		#  - DNS (requires manual verification)
+		def authorize_for_domain(domain, options={})
 			authorization = client.authorize(domain: domain)
-			challenge = authorization.http01
 
-			file_name = Rails.root.join('public', challenge.filename)
-			dir = File.dirname(Rails.root.join('public', challenge.filename))
+			# Default challenge is via HTTP
+			# but the developer can also use
+			# a DNS TXT record to authorize.
+			if options[:challenge] == :dns
+				challenge = authorization.dns01
 
-			FileUtils.mkdir_p(dir)
+				unless options[:skip_puts]
+					puts "===================================================================="
+					puts "Record:"
+					puts
+					puts " - Name: #{challenge.record_name}"
+					puts " - Type: #{challenge.record_type}"
+					puts " - Value: #{challenge.record_content}"
+					puts
+					puts "Create the record; Wait a minute (or two); Request for verification!"
+					puts "===================================================================="
+				end
 
-			File.write(file_name, challenge.file_content)
+				return challenge
+			else
+				challenge = authorization.http01
 
+				file_name = Rails.root.join('public', challenge.filename)
+				dir = File.dirname(Rails.root.join('public', challenge.filename))
+
+				FileUtils.mkdir_p(dir)
+
+				File.write(file_name, challenge.file_content)
+
+				request_verification(challenge) == 'invalid'
+				
+				return challenge.verify_status
+			end
+		end
+
+		def request_verification(challenge)
 			challenge.request_verification
-
 			sleep(1)
-			
-			File.delete(file_name) if challenge.verify_status == 'invalid'
-			
 			return challenge.verify_status
 		end
 

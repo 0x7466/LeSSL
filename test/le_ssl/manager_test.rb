@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LeSsl::ManagerTest < ActiveSupport::TestCase
 	def private_key; @private_key ||= OpenSSL::PKey::RSA.new(2048); end
-	def manager; @manager ||= LeSsl::Manager.new(skip_register: true, email: FFaker::Internet.email, private_key: private_key, agree_terms: true); end
+	def manager(skip_register=true); @manager ||= LeSsl::Manager.new(skip_register: skip_register, email: FFaker::Internet.free_email, private_key: private_key, agree_terms: true); end
 
 	test 'valid initialization (without registering)' do
 		assert_nothing_raised do
@@ -49,6 +49,12 @@ class LeSsl::ManagerTest < ActiveSupport::TestCase
 
 	test 'client' do
 		assert_kind_of Acme::Client, manager.send(:client)
+	end
+
+	test 'authorization with DNS' do
+		challenge = manager(false).authorize_for_domain('example.org', challenge: :dns, skip_puts: true)
+
+		assert_kind_of Acme::Client::Resources::Challenges::DNS01, challenge
 	end
 
 	private
