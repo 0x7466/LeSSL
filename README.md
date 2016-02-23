@@ -69,6 +69,31 @@ This puts the public and private keys into `config/ssl`. Now you just have to co
 
 **Note that you have to authorize seperately for subdomains (e.g. www.example.com)!**
 
+Use DNS verification
+--------------------
+
+If the domain isn't pointing to your server, you can also use a DNS TXT verification. Simply pass the option `:challenge` with the value `:dns` to the parameters of the `#authorize_for_domain` method:
+
+```ruby
+challenge = manager.authorize_for_domain('example.com', challenge: :dns)
+```
+
+**Important!** Save the returned value into a variable because it's needed to request the verification!
+
+Then create the corresponding DNS TXT record for your domain. (Hint: The `#authorize_for_domain` method prints the information if you use it from the command line)
+
+Wait a few minutes to be sure that the record was updated by the Let's encrypt servers.
+
+And as last step request the verification for the challenge.
+
+```ruby
+manager.request_verification(challenge)
+```
+
+This returns the verification status afterwards.
+
+If this returns `valid` you are authorized to obtain a certificate for this domain.
+
 Skip registering
 ----------------
 
