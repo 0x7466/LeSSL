@@ -6,7 +6,7 @@ require "le_ssl/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name                  = "le_ssl"
-  s.version               = LeSsl::VERSION
+  s.version               = LeSSL::VERSION
   s.required_ruby_version = '>= 2.1.0'
   s.authors               = ["Tobias Feistmantl"]
   s.email                 = ["tobias@feistmantl.io"]

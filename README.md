@@ -35,7 +35,7 @@ Create an instance of the LeSSL Manager:
 
 ```ruby
 private_key = OpenSSL::PKey::RSA.new(4096)
-manager = LeSsl::Manager.new(email: 'john@example.com', agree_terms: true, private_key: private_key)
+manager = LeSSL::Manager.new(email: 'john@example.com', agree_terms: true, private_key: private_key)
 ```
 It's recommended to store the contact email and the private key in environment variables because you are just allowed to obtain certificates for domains you are authorized for.
 
@@ -43,7 +43,7 @@ If you have `LESSL_CLIENT_PRIVATE_KEY` and `LESSL_CONTACT_EMAIL` set, you don't 
 
 ```ruby
 # Example
-manager = LeSsl::Manager.new(agree_terms: true)  # Accepting the terms is enough
+manager = LeSSL::Manager.new(agree_terms: true)  # Accepting the terms is enough
 ```
 
 The manager registers automatically a new account on the Let's Encrypt servers.
@@ -100,7 +100,7 @@ Skip registering
 You can also skip the automatic registering which is done in the initializer:
 
 ```ruby
-manager = LeSsl::Manager.new(agree_terms: true, email: 'john@example.com', private_key: private_key, skip_register: true)
+manager = LeSSL::Manager.new(agree_terms: true, email: 'john@example.com', private_key: private_key, skip_register: true)
 ```
 
 To register an account call the `#register` method:

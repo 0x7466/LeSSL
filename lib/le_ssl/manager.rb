@@ -1,4 +1,4 @@
-module LeSsl
+module LeSSL
 	class Manager
 		PRODUCTION_ENDPOINT = 'https://acme-v01.api.letsencrypt.org/'
 		DEVELOPMENT_ENDPOINT = 'https://acme-staging.api.letsencrypt.org/'
@@ -6,8 +6,8 @@ module LeSsl
 		def initialize(options={})
 			email = options[:email] || email_from_env
 
-			raise LeSsl::NoContactEmailError if email.nil?
-			raise LeSsl::TermsNotAcceptedError unless options[:agree_terms] == true
+			raise LeSSL::NoContactEmailError if email.nil?
+			raise LeSSL::TermsNotAcceptedError unless options[:agree_terms] == true
 
 			self.private_key = options[:private_key].presence
 
@@ -79,7 +79,7 @@ module LeSsl
 
 			return certificate
 		rescue Acme::Client::Error::Unauthorized => e
-			raise LeSsl::UnauthorizedError, e.message
+			raise LeSSL::UnauthorizedError, e.message
 		end
 
 		def register(email)
@@ -100,13 +100,13 @@ module LeSsl
 			elsif key.nil?
 				nil		# Return silently
 			else
-				raise LeSsl::PrivateKeyInvalidFormat
+				raise LeSSL::PrivateKeyInvalidFormat
 			end
 		end
 
 		def private_key
 			self.private_key = private_key_string_from_env if @private_key.nil?
-			raise(LeSsl::NoPrivateKeyError, "No private key for certificate account found") if @private_key.nil?
+			raise(LeSSL::NoPrivateKeyError, "No private key for certificate account found") if @private_key.nil?
 			
 			@private_key
 		end

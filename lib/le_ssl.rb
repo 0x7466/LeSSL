@@ -2,5 +2,7 @@ require 'acme/client'
 require 'le_ssl/errors'
 require 'le_ssl/manager'
 
-module LeSsl
+module LeSSL
 end
+
+LeSsl = LeSSL
