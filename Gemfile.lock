@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    le_ssl (0.0.4)
+    le_ssl (0.0.4.1)
       acme-client (~> 0.3.0)
       rails (>= 4.0.0)
 
