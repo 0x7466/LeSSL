@@ -39,7 +39,7 @@ manager = LeSsl::Manager.new(email: 'john@example.com', agree_terms: true, priva
 ```
 It's recommended to store the contact email and the private key in environment variables because you are just allowed to obtain certificates for domains you are authorized for.
 
-If you have `CERT_ACCOUNT_EMAIL` and `CERT_ACCOUNT_PRIVATE_KEY` set, you don't have to pass them to the initializer.
+If you have `LESSL_CLIENT_PRIVATE_KEY` and `LESSL_CONTACT_EMAIL` set, you don't have to pass them to the initializer.
 
 ```ruby
 # Example

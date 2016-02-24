@@ -4,7 +4,7 @@ module LeSsl
 		DEVELOPMENT_ENDPOINT = 'https://acme-staging.api.letsencrypt.org/'
 
 		def initialize(options={})
-			email = options[:email] || ENV['CERT_ACCOUNT_EMAIL'].presence
+			email = options[:email] || email_from_env
 
 			raise LeSsl::NoContactEmailError if email.nil?
 			raise LeSsl::TermsNotAcceptedError unless options[:agree_terms] == true
@@ -105,7 +105,7 @@ module LeSsl
 		end
 
 		def private_key
-			self.private_key = ENV['CERT_ACCOUNT_PRIVATE_KEY'].presence if @private_key.nil?
+			self.private_key = private_key_string_from_env if @private_key.nil?
 			raise(LeSsl::NoPrivateKeyError, "No private key for certificate account found") if @private_key.nil?
 			
 			@private_key
@@ -113,6 +113,16 @@ module LeSsl
 
 		def client
 			@acme_client ||= Acme::Client.new(private_key: private_key, endpoint: (Rails.env.development? ? DEVELOPMENT_ENDPOINT : PRODUCTION_ENDPOINT))
+		end
+
+		def private_key_string_from_env
+			warn "DEPRECATION WARNING! Use LESSL_CLIENT_PRIVATE_KEY instead of CERT_ACCOUNT_PRIVATE_KEY for environment variable!" if ENV['CERT_ACCOUNT_PRIVATE_KEY'].present?
+			return ENV['LESSL_CLIENT_PRIVATE_KEY'] || ENV['CERT_ACCOUNT_PRIVATE_KEY'].presence
+		end
+
+		def email_from_env
+			warn "DEPRECATION WARNING! Use LESSL_CONTACT_EMAIL instead of CERT_ACCOUNT_EMAIL for environment variable!" if ENV['CERT_ACCOUNT_EMAIL'].present?
+			return ENV['LESSL_CONTACT_EMAIL'].presence || ENV['CERT_ACCOUNT_EMAIL'].presence
 		end
 	end
 end
