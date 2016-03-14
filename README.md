@@ -57,7 +57,7 @@ manager.authorize_for_domain('example.com')
 manager.authorize_for_domain('www.example.com')
 ```
 
-If you domain is properly set up you should now be authorized for the domain. Be also sure that your Rails server is running.
+If your domain is properly set up, you should now be authorized for the domain. Be also sure that your Rails server is running.
 
 Obtaining a SSL certificate:
 
