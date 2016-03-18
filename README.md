@@ -114,6 +114,11 @@ Development
 
 LeSSL uses the staging servers of Let's Encrypt if the Rails environment is set to 'development'.
 
+You need help?
+--------------
+
+Ask a question on [StackOverflow](https://stackoverflow.com/) with the tag 'le-ssl'.
+
 Planned Features
 ----------------
 
