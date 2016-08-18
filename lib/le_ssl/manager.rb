@@ -53,8 +53,6 @@ module LeSSL
 				FileUtils.mkdir_p(dir)
 
 				File.write(file_name, challenge.file_content)
-
-				request_verification(challenge) == 'invalid'
 				
 				return challenge.verify_status
 			end
