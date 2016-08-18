@@ -93,14 +93,16 @@ module LeSSL
 		private
 
 		def private_key=(key)
-			if key.is_a?(OpenSSL::PKey::RSA)
-				@private_key = key
-			elsif key.is_a?(String)
-				@private_key = OpenSSL::PKey::RSA.new(key)
-			elsif key.nil?
-				nil		# Return silently
-			else
-				raise LeSSL::PrivateKeyInvalidFormat
+			@private_key = begin
+				if key.is_a?(OpenSSL::PKey::RSA)
+					key
+				elsif key.is_a?(String)
+					OpenSSL::PKey::RSA.new(key)
+				elsif key.nil?
+					nil
+				else
+					raise LeSSL::PrivateKeyInvalidFormat
+				end
 			end
 		end
 
