@@ -19,5 +19,5 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", ">= 4.0.0"
-  s.add_dependency "acme-client", '~> 0.3.0'
+  s.add_dependency "acme-client", '~> 0.4.0'
 end
