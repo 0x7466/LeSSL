@@ -21,7 +21,7 @@ module LeSSL
 		#
 		# Challenge options:
 		#  - HTTP (default and recommended)
-		#  - DNS (requires manual verification)
+		#  - DNS
 		def authorize_for_domain(domain, options={})
 			authorization = client.authorize(domain: domain)
 
@@ -35,7 +35,7 @@ module LeSSL
 					puts "===================================================================="
 					puts "Record:"
 					puts
-					puts " - Name: #{challenge.record_name}"
+					puts " - Name: #{challenge.record_name}.#{domain}"
 					puts " - Type: #{challenge.record_type}"
 					puts " - Value: #{challenge.record_content}"
 					puts
@@ -43,7 +43,38 @@ module LeSSL
 					puts "===================================================================="
 				end
 
-				return challenge
+				# With this option the dns verification is
+				# done automatically. LeSSL waits until a
+				# valid record on your DNS servers was found
+				# and requests a verification.
+				#
+				# CAUTION! This is a blocking the thread!
+				if options[:automatic_verification]
+					dns = begin
+						if ns = options[:custom_nameservers]
+							LeSSL::DNS.new(ns)
+						else
+							LeSSL::DNS.new
+						end
+					end
+
+					puts
+					puts 'Wait until the TXT record was set...'
+
+					# Wait with verification until the
+					# challenge record is valid.
+					while dns.challenge_record_invalid?(domain, challenge.record_content)
+						puts 'DNS record not valid' if options[:verbose]
+
+						sleep(2) # Wait 2 seconds
+					end
+
+					puts 'Valid TXT record found. Continue with verification...'
+
+					return request_verification(challenge)
+				else
+					return challenge
+				end
 			else
 				challenge = authorization.http01
 

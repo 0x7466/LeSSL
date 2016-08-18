@@ -94,8 +94,26 @@ This returns the verification status afterwards.
 
 If this returns `valid` you are authorized to obtain a certificate for this domain.
 
-Skip registering
-----------------
+### Automatic verification
+
+You can tell LeSSL to verify the DNS record automatically. In this way you don't have to worry if the DNS record is already present.
+
+**Caution!** This option is blocking the thread until the verification is completed!
+
+```ruby
+manager.authorize_for_domain('example.com', challenge: :dns, automatic_verification: true)
+```
+
+By default, LeSSL uses the Google public nameservers (8.8.8.8 and 8.8.4.4) to check the records but you can use also your own ones:
+
+```ruby
+manager.authorize_for_domain('example.com', challenge: :dns, automatic_verification: true, custom_nameservers: 32.34.65.23)
+```
+
+The verification process may take some time, especially if you already have an _acme-challenge TXT record in your DNS table with a higher TTL. If you are able to configure the TTL on your own set it the shortest possible TTL. (E.g. 60 seconds)
+
+Skip registration
+-----------------
 
 You can also skip the automatic registering which is done in the initializer:
 
