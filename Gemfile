@@ -14,7 +14,5 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 group :development, :test do
-	gem 'rb-fsevent'
-	gem 'growl'
 	gem 'ffaker'
 end
