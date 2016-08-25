@@ -14,5 +14,5 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 group :development, :test do
-	gem 'ffaker'
+  gem 'ffaker'
 end
